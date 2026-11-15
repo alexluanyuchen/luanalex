@@ -1,0 +1,45 @@
+
+function reviewEssay(){
+ const essay=document.getElementById("essay").value.trim();
+ const grade=document.getElementById("grade").value;
+ const result=document.getElementById("result");
+
+ if(!essay){
+   result.innerText="请先输入作文！";
+   return;
+ }
+
+ const words=essay.replace(/\s/g,"").length;
+ const paragraphs=essay.split(/\n+/).filter(x=>x.trim()).length;
+
+ let advice=[];
+
+ if(words<500){
+   advice.push("作文篇幅较短，可以增加细节描写。");
+ }
+
+ if(paragraphs<3){
+   advice.push("建议合理分段，让文章结构更清晰。");
+ }
+
+ if(!/然而|但是|于是|最终|后来/.test(essay)){
+   advice.push("可以增加自然的情节转折。");
+ }
+
+ if(!/我明白|我懂得|让我懂得|成长|感悟/.test(essay)){
+   advice.push("结尾可以进一步深化中心思想。");
+ }
+
+ if(advice.length===0){
+   advice.push("文章结构初步完整，可以进一步润色语言。");
+ }
+
+ result.innerText=
+ "作文分析报告\n\n"+
+ "年级："+grade+"\n"+
+ "字数："+words+"\n"+
+ "段落："+paragraphs+"\n\n"+
+ "修改建议：\n"+
+ advice.map((x,i)=>(i+1)+"."+x).join("\n")+
+ "\n\n注意：当前为基础分析版本，并非真正的AI逐句改写。";
+}
